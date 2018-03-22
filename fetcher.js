@@ -48,28 +48,28 @@ var Fetcher = function(url, reloadInterval, encoding) {
 //			var pubdate = item.pubdate || item.published || item.updated;
 //			var url = item.url || item.link || "";
 
-			var description = "";
-			var pubdate = "";
-			var url = "";
+			var description = "1";
+			var pubdate = "1";
+			var url = "1";
 
-			if (title && pubdate) {
+			if (title) {
 
-				var regex = /(<([^>]+)>)/ig;
-				description = description.toString().replace(regex, "");
+//				var regex = /(<([^>]+)>)/ig;
+//				description = description.toString().replace(regex, "");
 
 				items.push({
 					title: title,
-					description: description,
-					pubdate: pubdate,
-					url: url,
+//					description: description,
+//					pubdate: pubdate,
+//					url: url,
 				});
 
 			} else {
 				console.log("Can't parse feed item:");
 				console.log(item);
 				console.log("Title: " + title);
-				console.log("Description: " + description);
-				console.log("Pubdate: " + pubdate);
+//				console.log("Description: " + description);
+//				console.log("Pubdate: " + pubdate);
 			}
 		});
 
@@ -86,7 +86,7 @@ var Fetcher = function(url, reloadInterval, encoding) {
 
 
 		nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
-		headers =	{"User-Agent": "Mozilla/5.0 (Node.js "+ nodeVersion + ") MagicMirror/"	+ global.version +	" (https://github.com/MichMich/MagicMirror/)",
+		headers =	{"User-Agent": "Mozilla/5.0 (Node.js "+ nodeVersion + ") MagicMirror/"	+ global.version +	" (https://github.com/ShakirAkbari/MMM-CTATracker/)",
 			"Cache-Control": "max-age=0, no-cache, no-store, must-revalidate",
 			"Pragma": "no-cache"}
 
