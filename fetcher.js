@@ -16,6 +16,23 @@ var iconv = require("iconv-lite");
  * attribute reloadInterval number - Reload interval in milliseconds.
  */
 
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+   if (this.readyState == 4 && this.status == 200) {
+       myFunction(this);
+   }
+};
+xhttp.open("GET", "http://www.ctabustracker.com/bustime/api/v1/getpredictions?key=gGQVtvHjKSHBURKrrvihtRG3P&stpid=730", true);
+xhttp.send();
+
+function myFunction(xml) {
+    var xmlDoc = xml.responseXML;
+    var x = xmlDoc.getElementsByTagName("msg")[0];
+    document.getElementById("demo").innerHTML =
+    "Text Nodes: " + x.textContent;
+}
+
+
 var Fetcher = function(url, reloadInterval, encoding) {
 	var self = this;
 	if (reloadInterval < 1000) {
@@ -43,33 +60,34 @@ var Fetcher = function(url, reloadInterval, encoding) {
 
 		parser.on("item", function(item) {
 
-			var title = item.prdtm;
+			var title = xmlDoc.getElementsByTagName("msg")[0]
+//			var title = item.title;
 //			var description = item.description || item.summary || item.content || "";
 //			var pubdate = item.pubdate || item.published || item.updated;
 //			var url = item.url || item.link || "";
 
-			var description = "1";
-			var pubdate = "1";
-			var url = "1";
+//			if (title && pubdate) {
+			if (title ) {
 
-			if (title) {
+				var regex = /(<([^>]+)>)/ig;
+				description = description.toString().replace(regex, "");
 
-//				var regex = /(<([^>]+)>)/ig;
-//				description = description.toString().replace(regex, "");
-
-				items.push({
-					title: title,
+//				items.push({
+//					title: title,
 //					description: description,
 //					pubdate: pubdate,
 //					url: url,
+//				});
+
+
+				items.push({
+					title: title,
 				});
 
 			} else {
 				console.log("Can't parse feed item:");
 				console.log(item);
 				console.log("Title: " + title);
-//				console.log("Description: " + description);
-//				console.log("Pubdate: " + pubdate);
 			}
 		});
 
@@ -86,7 +104,7 @@ var Fetcher = function(url, reloadInterval, encoding) {
 
 
 		nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
-		headers =	{"User-Agent": "Mozilla/5.0 (Node.js "+ nodeVersion + ") MagicMirror/"	+ global.version +	" (https://github.com/ShakirAkbari/MMM-CTATracker/)",
+		headers =	{"User-Agent": "Mozilla/5.0 (Node.js "+ nodeVersion + ") MagicMirror/"	+ global.version +	" (https://github.com/MichMich/MagicMirror/)",
 			"Cache-Control": "max-age=0, no-cache, no-store, must-revalidate",
 			"Pragma": "no-cache"}
 
