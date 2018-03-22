@@ -1,3 +1,4 @@
+# This is a work in progress and does not work at the moment
 # MMM-CTATracker
 A Magic Mirror module (MMM) whose purpose is to retrieve bus arrival in Chicago using the CTA API
 
